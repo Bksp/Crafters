@@ -26,6 +26,7 @@ async function loadComponents() {
         initCarousel();
         setupLogoClick();
         setupScrollListener();
+        setupMobileMenu();
 
         // Fix page starting at bottom: Force browser to scroll to top after all paints
         setTimeout(() => {
@@ -81,6 +82,38 @@ function setupScrollListener() {
 
     // Also trigger immediately to check initial scroll position
     window.dispatchEvent(new Event('scroll'));
+}
+
+function setupMobileMenu() {
+    const toggle = document.getElementById('nav-toggle');
+    const menu = document.getElementById('nav-menu');
+    const links = document.querySelectorAll('.nav__link');
+    const logo = document.getElementById('nav-logo');
+
+    if (!toggle || !menu) return;
+
+    toggle.addEventListener('click', () => {
+        toggle.classList.toggle('active');
+        menu.classList.toggle('active');
+        
+        if (logo) logo.classList.toggle('nav__logo--hidden');
+        
+        // Prevent scrolling on body when menu is open
+        if (menu.classList.contains('active')) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = '';
+        }
+    });
+
+    links.forEach(link => {
+        link.addEventListener('click', () => {
+            toggle.classList.remove('active');
+            menu.classList.remove('active');
+            if (logo) logo.classList.remove('nav__logo--hidden');
+            document.body.style.overflow = '';
+        });
+    });
 }
 
 function initCarousel() {
