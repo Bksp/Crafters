@@ -1,0 +1,130 @@
+/* 
+ * Main.css
+ * Base reset, common utilities, and typography setup.
+ */
+
+ *, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+    scroll-snap-type: y mandatory;
+    overflow-x: hidden;
+    /* Hide scrollbar for IE, Edge and Firefox */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  html::-webkit-scrollbar {
+    display: none;
+  }
+  
+  body {
+    background-color: var(--bg-primary);
+    color: var(--text-main);
+    font-family: var(--font-primary);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  /* Typography basics */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    line-height: 1.2;
+  }
+  
+  a {
+    color: inherit;
+    text-decoration: none;
+    transition: color var(--transition-fast);
+  }
+  
+  ul {
+    list-style: none;
+  }
+  
+  img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+  
+  /* Layout Utilities */
+  .container {
+    width: 100%;
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 var(--spacing-sm);
+  }
+  
+  .section {
+    padding: var(--spacing-xl) 0;
+    min-height: 100vh;
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .section__header {
+    margin-bottom: var(--spacing-lg);
+    text-align: center;
+  }
+  
+  .section__title {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+  
+  /* Buttons Utility */
+  .btn {
+    display: inline-block;
+    padding: 1rem 2rem;
+    font-family: var(--font-heading);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    text-align: center;
+    border-radius: var(--border-radius); /* Sharp */
+  }
+  
+  .btn--primary {
+    background-color: var(--accent-color);
+    color: var(--text-main);
+    border: 1px solid var(--accent-hover);
+  }
+  
+  .btn--primary:hover {
+    background-color: var(--accent-hover);
+    box-shadow: 0 0 15px rgba(56, 178, 89, 0.4); /* Glow effect */
+    transform: translateY(-2px);
+  }
+  
+  .btn--large {
+    padding: 1.25rem 3rem;
+    font-size: 1.125rem;
+  }
+  
+  /* CSS Grid Utility */
+  .grid {
+    display: grid;
+    gap: var(--spacing-md);
+    grid-template-columns: 1fr;
+  }
+  
+  @media (min-width: 768px) {
+    .grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }

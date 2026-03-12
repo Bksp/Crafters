@@ -1,0 +1,53 @@
+/* 
+ * Variables.css
+ * Centralizing colors, typography, and measurements using CSS Custom Properties.
+ */
+
+ :root {
+    /* 
+     * COLORS
+     * Dark theme inspired by official Minecraft launcher and savee.com 
+     */
+    --bg-primary: #121212; /* Deep dark background */
+    --bg-secondary: #1a1a1a;
+    --bg-card: rgba(30, 30, 30, 0.85); /* Slightly translucent dark for cards */
+    
+    --text-main: #ffffff;
+    --text-muted: #a0a0a0;
+    
+    --accent-color: #38b259; /* Minecraft-inspired vibrant green */
+    --accent-hover: #45c468;
+    
+    /* Minecraft Launcher style sharp borders & contrasts */
+    --border-color: rgba(255, 255, 255, 0.1);
+    --border-highlight: rgba(255, 255, 255, 0.3);
+    --border-radius: 0px; /* Sharp corners, no rounding */
+    
+    /* 
+     * TYPOGRAPHY 
+     */
+    --font-primary: 'Inter', system-ui, -apple-system, sans-serif; /* Clean reading font */
+    --font-heading: 'Outfit', system-ui, -apple-system, sans-serif; /* Bold structured headings */
+    
+    /* 
+     * LAYOUT & MEASUREMENTS 
+     */
+    --max-width: 1200px;
+    
+    /* Spacing Scale */
+    --spacing-xs: 0.5rem;   /* 8px */
+    --spacing-sm: 1rem;     /* 16px */
+    --spacing-md: 2rem;     /* 32px */
+    --spacing-lg: 4rem;     /* 64px */
+    --spacing-xl: 8rem;     /* 128px */
+    
+    /* Animations & Transitions */
+    --transition-fast: 0.2s ease;
+    --transition-slow: 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+    
+    /* Z-Index Layers */
+    --z-background: -1;
+    --z-normal: 1;
+    --z-header: 100;
+    --z-overlay: 200;
+  }

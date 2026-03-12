@@ -1,0 +1,441 @@
+/* 
+ * Components.css
+ * BEM styled components.
+ */
+
+/* ================= HEADER & NAV ================= */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: var(--z-header);
+    background-color: transparent; /* Transparent background on Hero */
+    border-bottom: 1px solid transparent; 
+    padding: var(--spacing-sm) 0;
+    transition: background-color var(--transition-fast), border-bottom var(--transition-fast);
+}
+
+.header--scrolled {
+    background-color: var(--bg-primary); 
+    border-bottom: 1px solid var(--border-color);
+}
+
+.nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav__logo {
+    font-family: var(--font-heading);
+    font-weight: 900;
+    font-size: 1.5rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: color var(--transition-fast);
+}
+
+.nav__logo:hover {
+    color: var(--accent-color);
+}
+
+.nav__list {
+    display: flex;
+    gap: var(--spacing-md);
+}
+
+.nav__link {
+    font-weight: 500;
+    text-transform: uppercase;
+    font-size: 0.875rem;
+    letter-spacing: 1px;
+}
+
+.nav__link:hover {
+    color: var(--accent-color);
+}
+
+/* ================= 1. HERO SECTION (SPLIT) ================= */
+.hero {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column; /* Stack vertically on mobile */
+    overflow: hidden;
+    scroll-snap-align: start;
+}
+
+.hero__split {
+    position: relative;
+    height: 50vh; 
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    cursor: default;
+}
+
+@media (min-width: 768px) {
+    .hero {
+        flex-direction: row; /* Horizontal split 50/50 on desktop */
+    }
+    .hero__split {
+        height: 100vh;
+        width: 50%;
+    }
+}
+
+.hero__bg {
+    position: absolute;
+    top: -5%; 
+    left: -5%;
+    width: 110%; /* Scaled up base to avoid edge showing during parallax/resize */
+    height: 110%;
+    background-size: cover;
+    background-position: center;
+    z-index: var(--z-background);
+    transition: transform var(--transition-slow);
+}
+
+/* 
+ * HERO MOVEMENT / PARALLAX EFFECT 
+ * Using CSS transform over JS for better performance. 
+ * To adjust magnitude, alter the scale factor. 
+ */
+.hero__split:hover .hero__bg {
+    transform: scale(1.05); /* Smooth depth movement effect */
+}
+
+/* Base overlay for text legibility */
+.hero__split::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5); /* Minimalist overlay */
+    transition: background var(--transition-slow);
+    z-index: 0;
+}
+
+/* Lightens overlay interacting giving focus */
+.hero__split:hover::before {
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.hero__content {
+    position: relative;
+    z-index: var(--z-normal);
+    padding: var(--spacing-md);
+}
+
+.hero__title {
+    font-size: clamp(3rem, 8vw, 5rem);
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    margin-bottom: var(--spacing-xs);
+    text-shadow: 0 4px 10px rgba(0,0,0,0.5);
+}
+
+.hero__subtitle {
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    font-weight: 300;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #ddd;
+}
+
+/* Scroll Indicator */
+.hero__scroll {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: var(--z-normal);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    opacity: 0.8;
+    animation: bounce 2s infinite;
+}
+
+.hero__scroll-text {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translate(-50%, 0); }
+    40% { transform: translate(-50%, -10px); }
+    60% { transform: translate(-50%, -5px); }
+}
+
+/* ================= 2. CAROUSEL (SAVEE STYLE) ================= */
+.carousel {
+    position: relative;
+    width: 100%;
+    margin-bottom: var(--spacing-xl);
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color); /* Sharp minimalist border */
+    padding: 2px; 
+}
+
+.carousel__track-container {
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9; /* Sleek proportions */
+}
+
+@media (min-width: 768px) {
+    .carousel__track-container {
+        aspect-ratio: 21 / 9;
+    }
+}
+
+.carousel__track {
+    display: flex;
+    height: 100%;
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.carousel__slide {
+    min-width: 100%;
+    height: 100%;
+}
+
+.carousel__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(30%); /* Desaturation for savee minimalist mood */
+    transition: filter var(--transition-slow);
+}
+
+.carousel__slide.current-slide .carousel__img {
+    filter: grayscale(0%);
+}
+
+.carousel__btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(18, 18, 18, 0.8);
+    color: var(--text-main);
+    border: 1px solid var(--border-color);
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    transition: all var(--transition-fast);
+    font-size: 1.5rem;
+}
+
+.carousel__btn:hover {
+    background: var(--bg-primary);
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+}
+
+.carousel__btn--prev { left: 1rem; }
+.carousel__btn--next { right: 1rem; }
+
+.carousel__nav {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    padding: 1rem 0;
+    background: var(--bg-primary);
+    border-top: 1px solid var(--border-color);
+}
+
+.carousel__indicator {
+    width: 10px;
+    height: 10px;
+    background: rgba(255, 255, 255, 0.15);
+    border: none;
+    border-radius: 0; /* Square minimalist dots */
+    cursor: pointer;
+    transition: background var(--transition-fast), transform var(--transition-fast);
+}
+
+.carousel__indicator:hover {
+    transform: scale(1.2);
+}
+
+.carousel__indicator.current-slide {
+    background: var(--accent-color);
+}
+
+
+/* ================= FEEDER & CARDS ================= */
+.feeder {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xl);
+}
+
+.feeder__category {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.feeder__title {
+    font-size: 2rem;
+    border-left: 4px solid var(--accent-color);
+    padding-left: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Cards - Minecraft Launcher Inspired */
+.card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius); /* Sharp 0px */
+    overflow: hidden;
+    transition: all var(--transition-fast);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Inner highlight mimic launcher select */
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    box-shadow: inset 0 0 0 1px transparent;
+    pointer-events: none;
+    transition: box-shadow var(--transition-fast);
+    z-index: 10;
+}
+
+.card:hover {
+    transform: translateY(-4px); /* Elevates */
+    background-color: #242424;
+    border-color: var(--border-highlight); /* Illuminates border */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5); /* Deep shadow */
+}
+
+.card:hover::before {
+    box-shadow: inset 0 0 0 1px var(--border-highlight);
+}
+
+.card__image-container {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.card__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--transition-slow);
+}
+
+.card:hover .card__img {
+    transform: scale(1.05); /* Image zoom on focus */
+}
+
+.card__content {
+    padding: var(--spacing-md);
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.card__title {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-main);
+    letter-spacing: 1px;
+}
+
+.card__excerpt {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    margin-bottom: var(--spacing-sm);
+    flex-grow: 1;
+}
+
+.card__date {
+    font-family: var(--font-heading);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--accent-color);
+    font-weight: 600;
+}
+
+
+/* ================= 3. PANEL SECTION CTA ================= */
+.panel {
+    background-color: var(--bg-secondary);
+    border-top: 1px solid var(--border-color);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Subtle background design (dots) */
+.panel::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(var(--border-color) 1px, transparent 1px);
+    background-size: 24px 24px;
+    opacity: 0.4;
+    pointer-events: none;
+}
+
+.panel__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-md);
+    position: relative;
+    z-index: var(--z-normal);
+}
+
+.panel__title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.panel__description {
+    max-width: 600px;
+    color: var(--text-muted);
+    font-size: 1.1rem;
+}
+
+/* ================= FOOTER ================= */
+.footer {
+    padding: var(--spacing-md) 0;
+    background-color: var(--bg-primary);
+    text-align: center;
+    border-top: 1px solid var(--border-color);
+    scroll-snap-align: end;
+}
+
+.footer__text {
+    color: var(--text-muted);
+    font-size: 0.875rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
